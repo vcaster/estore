@@ -24,7 +24,7 @@
     "cloudinary": "1.11.0",
     "concurrently": "3.6.0",
     "cookie-parser": "1.4.3",
-    "dotenv": "6.0.0",
+    "dotenv": "6.0.0", 
     "express": "4.16.3",
     "express-formidable": "1.0.0",
     "jsonwebtoken": "8.3.0",

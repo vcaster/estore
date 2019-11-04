@@ -9,7 +9,6 @@
     "server": "nodemon server/server.js",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
-
   },
   "repository": {
     "type": "git",
@@ -22,12 +21,13 @@
   },
   "homepage": "https://github.com/vcaster/estore#readme",
   "dependencies": {
+    "@babel/runtime": "7.0.0-beta.55",
     "bcrypt": "^3.0.6",
     "body-parser": "1.18.3",
     "cloudinary": "1.11.0",
     "concurrently": "3.6.0",
     "cookie-parser": "1.4.3",
-    "dotenv": "6.0.0", 
+    "dotenv": "6.0.0",
     "express": "4.16.3",
     "express-formidable": "1.0.0",
     "jsonwebtoken": "8.3.0",

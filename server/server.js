@@ -103,7 +103,7 @@ app.post('/api/product/type', auth,admin, (req,res) =>{
 
 });
 
-app.get('/api/product/types', auth,admin, (req,res) =>{
+app.get('/api/product/types', (req,res) =>{
     Type.find({},(err,types)=>{
         if(err) return res.status(400).send(err);
         res.status(200).send(types)

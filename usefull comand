@@ -9,3 +9,4 @@ start mongodb
 > mongod.exe
 
 yarn run server
+yarn run dev

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PageTop from '../utils/page_top'
 
-import {types} from '../utils/Form/fixed_catgories'
+import {types,price} from '../utils/Form/fixed_catgories'
 
 import { connect } from "react-redux";
 import {getBrands, getTypes} from '../../actions/products_action'
 
 import CollapseCheckbox from "../utils/collapseCheckbox";
+import CollapseRadio from '../utils/collapseRadio'
 
 
 class Shop extends Component {
@@ -27,9 +28,28 @@ class Shop extends Component {
         this.props.dispatch(getTypes());
     }
 
+    handlePrice = (value) => {
+        const data = price
+        let array = [];
+
+        for(let key in data){
+            if(data[key]._id === parseInt(value,10)){
+                array = data[key].array
+            }
+        }
+        return array;
+    }
+
     handleFilters = (filters, category) => {
         const newFilters = {...this.state.filters}
         newFilters[category] = filters;
+
+        if(category === "price"){
+            let priceValues = this.handlePrice(filters);
+            newFilters[category] = priceValues
+        }
+
+
         this.setState({
             filters:newFilters
         })
@@ -49,7 +69,7 @@ class Shop extends Component {
                         <div className="left">
                             
                             <CollapseCheckbox
-                                initState={true}
+                                initState={false}
                                 title="Brands"
                                 list={products.brands}
                                 handleFilters={(filters)=>this.handleFilters(filters,'brands')}
@@ -57,10 +77,17 @@ class Shop extends Component {
                             />
 
                             <CollapseCheckbox
-                                initState={true}
+                                initState={false}
                                 title="Types"
                                 list={types}
                                 handleFilters={(filters)=>this.handleFilters(filters,'types')}
+
+                            />
+                            <CollapseRadio
+                                initState={true}
+                                title="Price"
+                                list={price}
+                                handleFilters={(filters)=>this.handleFilters(filters,'price')}
 
                             />
                         </div>

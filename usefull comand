@@ -10,3 +10,5 @@ start mongodb
 
 yarn run server
 yarn run dev
+
+npm config set ignore-scripts true

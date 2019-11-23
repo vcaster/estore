@@ -26,12 +26,14 @@ class Card extends Component {
                         <div className="brand">{props.brand.name}</div>
                         <div className="name">{props.name}</div>
                         <div className="name">${props.price}</div>
-                    </div>
+                    
                 </div>
                 { props.grid ? 
 
                     <div className="description">
-                        esdcfdfvesd
+                        <p>
+                        {props.description}
+                        </p>
                     </div>
 
 
@@ -44,7 +46,7 @@ class Card extends Component {
                             altClass="card_link"
                             title="View Product"
                             linkTo={`/product_detail/${props._id}`}
-
+ 
                             addStyles={{
                                 margin: "10px 0 0 0"
                             }}
@@ -58,6 +60,7 @@ class Card extends Component {
                             }}
                         />
                     </div>
+                </div>
                 </div>
             </div>
         );

@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import PageTop from '../utils/page_top'
 
-import {types,price} from '../utils/Form/fixed_catgories'
+import {price} from '../utils/Form/fixed_catgories'
 
 import { connect } from "react-redux";
-import {getBrands, getTypes} from '../../actions/products_action'
+import {getProductsToshop, getBrands, getTypes} from '../../actions/products_action'
 
 import CollapseCheckbox from "../utils/collapseCheckbox";
 import CollapseRadio from '../utils/collapseRadio'
+
+import LoadmoreCards from './loadmoreCards' 
+import FontAwesomeIcon from '@fortawesome/react-fontawesome'
+import faBars from '@fortawesome/fontawesome-free-solid/faBars'
+import faTh from '@fortawesome/fontawesome-free-solid/faTh'
 
 
 class Shop extends Component {
@@ -17,8 +22,8 @@ class Shop extends Component {
         limit:6,
         skip:0,
         filters:{
-            brands:[],
-            types:[],
+            brand:[],
+            type:[],
             price:[]
         }
     }
@@ -26,6 +31,12 @@ class Shop extends Component {
     componentDidMount(){
         this.props.dispatch(getBrands());
         this.props.dispatch(getTypes());
+
+        this.props.dispatch(getProductsToshop(
+            this.state.skip,
+            this.state.limit,
+            this.state.filters
+        ));
     }
 
     handlePrice = (value) => {
@@ -49,13 +60,50 @@ class Shop extends Component {
             newFilters[category] = priceValues
         }
 
+        this.showFilteredResults(newFilters)
 
         this.setState({
             filters:newFilters
         })
     }
 
+    showFilteredResults = (filters) => {
+        this.props.dispatch(getProductsToshop(
+            0,
+            this.state.limit,
+            filters)).then(()=>{
+                this.setState({
+                    skip:0
+                })
+            })
+        
+    }
+
+
+    loadMoreCards = () => {
+        let skip = this.state.skip + this.state.limit;
+
+        this.props.dispatch(getProductsToshop(
+            skip,
+            this.state.limit,
+            this.state.filters,
+            this.props.products.toShop
+        )).then(()=>{
+            this.setState({
+                skip
+            })
+        })
+
+    }
+
+    handleGrid = ()=> {
+        this.setState({
+            grid:  !this.staterid ? 'grid_bars' : ''
+        })
+    }
+
     render() {
+        console.log(this.state.filters)
         const products = this.props.products;
         return (
             <div>
@@ -71,15 +119,15 @@ class Shop extends Component {
                                 initState={false}
                                 title="Brands"
                                 list={products.brands}
-                                handleFilters={(filters)=>this.handleFilters(filters,'brands')}
+                                handleFilters={(filters)=>this.handleFilters(filters,'brand')}
 
                             />
 
                             <CollapseCheckbox
                                 initState={false}
                                 title="Types"
-                                list={types}
-                                handleFilters={(filters)=>this.handleFilters(filters,'types')}
+                                list={products.types}
+                                handleFilters={(filters)=>this.handleFilters(filters,'type')}
 
                             />
                             <CollapseRadio
@@ -91,7 +139,28 @@ class Shop extends Component {
                             />
                         </div>
                         <div className="right">
-                            Right
+                            <div className="shop_options">
+                                <div className="shop_grids clear">
+                                    <div className={`grid_btn ${this.state.grid?'':'active'}`}
+                                        onClick={()=>this.handleGrid()}
+                                    >
+                                        <FontAwesomeIcon icon={faTh}/>
+                                    </div>
+                                    <div className={`grid_btn ${this.state.grid?'':'active'}`}
+                                    >
+                                        <FontAwesomeIcon icon={faBars}/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <LoadmoreCards
+                                    grid={this.state.grid}
+                                    limit={this.state.limit}
+                                    size={products.toShopSize}
+                                    products={products.toShop}
+                                    loadMore={()=> this.loadMoreCards()}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

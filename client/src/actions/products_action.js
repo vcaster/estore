@@ -3,7 +3,9 @@ import {
     GET_PRODUCTS_BY_SELL,
     GET_PRODUCTS_BY_ARRIVAL,
     GET_BRANDS,
+    ADD_BRAND,
     GET_TYPES,
+    ADD_TYPE,
     GET_PRODUCTS_TO_SHOP,
     ADD_PRODUCTS,
     CLEAR_PRODUCTS
@@ -62,6 +64,27 @@ export function getBrands(){
 
 }
 
+export function addBrand(dataToSubmit, existingBrands){
+
+    const request = axios.post(`${PRODUCT_SERVER}/brand`,dataToSubmit)
+        .then(response => {
+            let brands = [
+                ...existingBrands,
+                response.data.brand
+            ];
+            return {
+                success: response.data.success,
+                brands
+            }
+        });
+
+        return {
+            type: ADD_BRAND,
+            payload:request
+        }
+
+}
+
 export function getTypes(){
     const request = axios.get(`${PRODUCT_SERVER}/types`)
         .then(response => response.data);
@@ -70,6 +93,27 @@ export function getTypes(){
             type: GET_TYPES,
             payload:request
         }
+}
+
+export function addType(dataToSubmit, existingTypes){
+
+    const request = axios.post(`${PRODUCT_SERVER}/type`,dataToSubmit)
+        .then(response => {
+            let types = [
+                ...existingTypes,
+                response.data.type
+            ];
+            return {
+                success: response.data.success,
+                types
+            }
+        });
+
+        return {
+            type: ADD_TYPE,
+            payload:request
+        }
+
 }
 
 export function getProductsToshop (skip,limit,filters = [], previousState = []){

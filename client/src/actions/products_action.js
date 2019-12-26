@@ -8,7 +8,9 @@ import {
     ADD_TYPE,
     GET_PRODUCTS_TO_SHOP,
     ADD_PRODUCTS,
-    CLEAR_PRODUCTS
+    CLEAR_PRODUCTS,
+    GET_PRODUCT_DETAIL,
+    CLEAR_PRODUCT_DETAIL
 } from './types';
 import { PRODUCT_SERVER } from '../components/utils/misc';
 
@@ -22,6 +24,29 @@ export function getProductBySell(){
         }
 
 }
+
+export function getProductDetails(id){
+    const request = axios.get(`${PRODUCT_SERVER}/article_by_id?id=${id}&type=single`)
+        .then(response => {
+            return response.data[0]
+        });
+
+        return {
+            type: GET_PRODUCT_DETAIL,
+            payload:request
+        }
+
+} 
+
+export function clearProductDetails(){
+
+        return {
+            type: CLEAR_PRODUCT_DETAIL,
+            payload:''
+        }
+
+} 
+
 
 export function getProductByArrival(){
     const request = axios.get(`${PRODUCT_SERVER}/articles?sortBy=createdat&order=desc&limit=4`)

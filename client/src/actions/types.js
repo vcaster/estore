@@ -13,3 +13,5 @@ export const GET_TYPES = 'get_types';
 export const ADD_TYPE = 'add_type';
 export const GET_PRODUCTS_TO_SHOP = 'get_products_to_shop';
 export const CLEAR_PRODUCTS = 'clear_product'
+export const GET_PRODUCT_DETAIL = 'get_product_detail'
+export const CLEAR_PRODUCT_DETAIL = 'clear_product_detail'

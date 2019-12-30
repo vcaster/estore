@@ -12,7 +12,12 @@ class index extends Component {
     componentDidMount() {
         const id = this.props.match.params.id;
         // console.log(id)
-        this.props.dispatch(getProductDetails(id));
+        this.props.dispatch(getProductDetails(id)).then(response=>{
+            if(!this.props.products.prodDetail){
+                // console.log("no product found")
+                this.props.history.push('/')
+            }
+        });
     }
     componentWillUnmount(){
         this.props.dispatch(clearProductDetails())

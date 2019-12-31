@@ -13,7 +13,7 @@ class index extends Component {
         const id = this.props.match.params.id;
         // console.log(id)
         this.props.dispatch(getProductDetails(id)).then(response=>{
-            if(!this.props.products.prodDetail){
+            if(!this.props.products.productDetail){
                 // console.log("no product found")
                 this.props.history.push('/')
             }

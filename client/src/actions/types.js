@@ -16,3 +16,4 @@ export const GET_PRODUCTS_TO_SHOP = 'get_products_to_shop';
 export const CLEAR_PRODUCTS = 'clear_product'
 export const GET_PRODUCT_DETAIL = 'get_product_detail'
 export const CLEAR_PRODUCT_DETAIL = 'clear_product_detail'
+export const GET_CART_ITEMS_USER = 'get_cart_items_user'

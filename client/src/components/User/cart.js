@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import UserLayout from '../../hoc/user'
 import UserProductBlock from '../utils/User/product_block'
 import { connect } from 'react-redux'
-import { getCartItems} from '../../actions/user_actions'
+import { getCartItems, removeCartItem} from '../../actions/user_actions'
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faFrown from '@fortawesome/fontawesome-free-solid/faFrown'
@@ -20,15 +20,15 @@ class UserCart extends Component {
     }
 
     componentDidMount(){
-        let cartItem =  [];
+        let cartItems =  [];
         let user = this.props.user;
 
         if (user.userData.cart) {
             if (user.userData.cart.length > 0) {
                 user.userData.cart.forEach(item =>{
-                    cartItem.push(item.id)
+                    cartItems.push(item.id)
                 });
-                this.props.dispatch(getCartItems(cartItem, user.userData.cart)).then(()=>{
+                this.props.dispatch(getCartItems(cartItems, user.userData.cart)).then(()=>{
                     if(this.props.user.cartDetail.length > 0){
                         this.calculateTotal(this.props.user.cartDetail);
                     }
@@ -39,7 +39,7 @@ class UserCart extends Component {
     }
 
     calculateTotal = (cartDetail) => {
-        let total =0;
+        let total = 0;
 
         cartDetail.forEach(item =>{
             total += parseInt(item.price, 10) * item.quantity
@@ -50,8 +50,17 @@ class UserCart extends Component {
         })
     }
 
-    removeFromCart = () => {
-        
+    removeFromCart = (id) => {
+        this.props.dispatch(removeCartItem(id))
+        .then(()=>{
+            if(this.props.user.cartDetail.length <= 0){
+                this.setState({
+                    showTotal: false
+                })
+            }else {
+                this.calculateTotal(this.props.user.cartDetail)
+            }
+        })
     }
 
     showNoItem = () => (

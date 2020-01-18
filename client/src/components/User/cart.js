@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import UserLayout from '../../hoc/user'
 import UserProductBlock from '../utils/User/product_block'
 import { connect } from 'react-redux'
-import { getCartItems, removeCartItem} from '../../actions/user_actions'
+import { getCartItems, removeCartItem, onSuccessBuy} from '../../actions/user_actions'
 
 import FontAwesomeIcon from '@fortawesome/react-fontawesome'
 import faFrown from '@fortawesome/fontawesome-free-solid/faFrown'
 import faSmile from '@fortawesome/fontawesome-free-solid/faSmile'
 
-
+import Paystack from '../utils/paystack'
 
 class UserCart extends Component {
 
@@ -73,6 +73,30 @@ class UserCart extends Component {
         </div>
     )
 
+    transactionError = () => {
+
+    }
+
+    transactionCancelled = () => {
+
+    }
+
+    transactionSuccess = (data) => {
+
+        this.props.dispatch(onSuccessBuy({
+            cartDetail: this.props.user.cartDetail,
+            paymentData: data
+        })).then(()=>{
+            if (this.props.user.successBuy) {
+                this.setState({
+                    showTotal: false,
+                    showSuccess: true
+                })
+            }
+        })
+        
+    }
+
     render() {
         return (
             <UserLayout>
@@ -113,7 +137,13 @@ class UserCart extends Component {
                         {
                             this.state.showTotal ?
                             <div className="paypal_button_container">
-                                Paypal
+                                <Paystack
+                                    toPay={this.state.total}
+                                    email={this.props.user.userData.email}
+                                    transactionError={(data)=> this.transactionError(data)}
+                                    transactionCancelled={(data)=> this.transactionCancelled(data)}
+                                    onSuccess={(data)=> this.transactionSuccess(data)}
+                                />
                             </div>
                             :
                             null

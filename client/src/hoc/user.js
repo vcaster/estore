@@ -24,11 +24,11 @@ const admin = [
     },
     {
         name: 'Add products',
-        linkTo: 'admin/add_product'
+        linkTo: '/admin/add_product'
     },
     {
         name: 'Manage Categories',
-        linkTo: 'admin/manage_categories'
+        linkTo: '/admin/manage_categories'
     }
 ]
 

@@ -7,8 +7,9 @@ import faClock from '@fortawesome/fontawesome-free-solid/faClock'
 
 const str = process.env.REACT_APP_STORE;
 const store = str.toLowerCase();
-const Footer = () => {
+const Footer = ({data}) => {
     return (
+        data.siteData ?
         <footer className="bck_b_dark">
             <div className="container">
                 <div className="logo">
@@ -31,7 +32,7 @@ const Footer = () => {
                                 />
                                 <div className="nfo">
                                     <div className="">Address</div>
-                                    <div className="">{store} Location</div>
+                                    <div className="">{data.siteData[0].address}</div>
                                 </div>
                             </div>
                             <div className="tag">
@@ -41,7 +42,7 @@ const Footer = () => {
                                 />
                                 <div className="nfo">
                                     <div className="">Phone</div>
-                                    <div className="">{store} Phone number</div>
+                                    <div className="">{data.siteData[0].phone}</div>
                                 </div>
                             </div>
                             <div className="tag">
@@ -51,7 +52,7 @@ const Footer = () => {
                                 />
                                 <div className="nfo">
                                     <div className="">Working Hours</div>
-                                    <div className="">{store} Hours</div>
+                                    <div className="">{data.siteData[0].hours}</div>
                                 </div>
                             </div>
                             <div className="tag">
@@ -61,7 +62,7 @@ const Footer = () => {
                                 />
                                 <div className="nfo">
                                     <div className="">Email</div>
-                                    <div className="">{store} email Address</div>
+                                    <div className="">{data.siteData[0].email}</div>
                                 </div>
                             </div>
 
@@ -71,6 +72,7 @@ const Footer = () => {
             </div>
             
         </footer>
+        :null
     );
 };
 

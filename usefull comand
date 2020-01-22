@@ -46,6 +46,16 @@ clip < ~/.ssh/id_rsa.pub -- copy key -> past in github
 ssh -T git@github.com --- check if it works
 
 
+// mongodumps
 
+Import database
+mongorestore -h ds161742.mlab.com:61742 -d heroku_pchd3wg2 -u neon -p neon007 C:\Users\niran\OneDrive\Documents\dump
 
-
+mongorestore -h ds161742.mlab.com:61742 -d heroku_pchd3wg2 -u <user> -p <password> <input db directory>
+Export database
+mongodump -h localhost:27017 -d estore -o C:\Users\niran\OneDrive\Documents\dump
+mongodump -h ds161742.mlab.com:61742 -d heroku_pchd3wg2 -u <user> -p <password> -o <output directory>
+Import collection
+mongorestore -h ds161742.mlab.com:61742 -d heroku_pchd3wg2 -u <user> -p <password> <input .bson file>
+Export collection
+mongodump -h ds161742.mlab.com:61742 -d heroku_pchd3wg2 -c <collection> -u <user> -p <password> -o <output directory>

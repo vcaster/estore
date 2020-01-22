@@ -15,10 +15,20 @@ npm config set ignore-scripts true
 
 // heroku
 
+nb: add engines : { node -v }
+    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    in pack.json
+
 heroku login
 heroku keys:add --- add ssh key
 ssh -v git@heroku.com --- auth pub key
 heroku create
+git push heroku
+heroku addons:create mongolab:sandbox 
+heroku config
+heroku config:set XXXX=XXXXXXXX /unset/update
+
+
 
 // git
 git init -initialize/reinitialize

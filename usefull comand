@@ -12,3 +12,30 @@ yarn run server
 yarn run dev
 
 npm config set ignore-scripts true
+
+// heroku
+
+heroku login
+heroku keys:add --- add ssh key
+ssh -v git@heroku.com --- auth pub key
+heroku create
+
+// git
+git init -initialize/reinitialize
+git add <file> / . 
+git commit -m "message"
+git remote add origin git@github.com:<username>/<project name>.git
+git push -u origin master
+
+//ssh
+ssh-keygen -t rsa -b 4096 -C "ainaniran@yahoo.com" -- generate key
+ls -al ~/.ssh --- check key
+eval $(ssh-agent -s)
+ssh-add ~/.ssh/id_rsa
+clip < ~/.ssh/id_rsa.pub -- copy key -> past in github
+ssh -T git@github.com --- check if it works
+
+
+
+
+

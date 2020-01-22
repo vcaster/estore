@@ -466,7 +466,7 @@ app.post('/api/site/site_data',(req,res)=>{
 // DEFAULT
 if(process.env.NODE_ENV === 'production'){
     const path = require('path');
-    app.get('/*0',(req,res)=>{
+    app.get('/*',(req,res)=>{
         res.sendfile(path.resolve(__dirname,'../client', 'build', 'index.html'))
     })
 }

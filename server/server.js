@@ -2,7 +2,7 @@ const express = require('express');// server
 const bodyParser = require('body-parser'); // brings json from actual request --check packe if installed
 const cookieParser = require('cookie-parser'); // for cookies
 const formidable = require('express-formidable');// handles file request
-const cloudinary = require('cloudinary')
+const cloudinary = require('cloudinary');
 
 const app = express();
 const mongoose = require('mongoose');
@@ -42,6 +42,36 @@ const { Site } = require('./models/site')
 const { auth } = require('./middleware/auth');
 const { admin } = require('./middleware/admin');
 
+// UTILS
+const { sendEmail } = require('./utils/mail/index');
+
+
+// const smtpTransport = mailer.createTransport({
+//     service:"Gmail",
+//     auth:{
+//         user: "ainaniran38@gmail.com",
+//         pass: ""
+//     }
+// });
+
+// var mail = {
+//     from: "ainaniran38@gmail.com",
+//     to: "ainaniran@yahoo.com",
+//     subject: "Server started",
+//     text: "Server began at this time",
+//     html: "<b>Server began at this time</b>"
+// }
+
+
+// smtpTransport.sendMail(mail,function(error,response){
+//     if(error){
+//         console.log(error);
+//     }
+//     else {
+//         console.log('email sent')
+//     }
+//     smtpTransport.close();
+// })
 //=================================
 //           PRODUCTS
 //=================================
@@ -214,6 +244,7 @@ app.post('/api/users/register', (req,res) => {
 
     user.save((err,doc)=>{
         if(err) return res.json({success: false, err});
+        sendEmail(doc.email,doc.name,null,"welcome");
         res.status(200).json({
             success:true,
             userdata:doc

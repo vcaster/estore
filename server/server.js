@@ -3,6 +3,7 @@ const bodyParser = require('body-parser'); // brings json from actual request --
 const cookieParser = require('cookie-parser'); // for cookies
 const formidable = require('express-formidable');// handles file request
 const cloudinary = require('cloudinary');
+const SHA1 = require('crypto-js/sha1');
 
 const app = express();
 const mongoose = require('mongoose');
@@ -44,6 +45,11 @@ const { admin } = require('./middleware/admin');
 
 // UTILS
 const { sendEmail } = require('./utils/mail/index');
+
+
+// const date = new Date();
+// const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${SHA1
+//     ("17171712372DHSHE").toString().substring(0,8)}`
 
 
 // const smtpTransport = mailer.createTransport({
@@ -385,9 +391,15 @@ app.post('/api/users/successBuy', auth, (req,res)=>{
 
     let history = [];
     let transactionData = {}
+
+    const date = new Date();
+    const po = `PO-${date.getSeconds()}${date.getMilliseconds()}-${SHA1
+     (req.user._id).toString().substring(0,8)}`
+
     //USer history
     req.body.cartDetail.forEach((item)=>{
         history.push({
+            orderid: po,
             dateOfPurchase: Date.now(),
             name: item.name,
             brand: item.brand.name,
@@ -407,7 +419,12 @@ app.post('/api/users/successBuy', auth, (req,res)=>{
         email: req.user.email
     }
 
-    transactionData.data = req.body.paymentData;
+    transactionData.data = {
+
+        ...req.body.paymentData,
+        orderid: po
+
+    };
     transactionData.product = history;
 
     User.findOneAndUpdate(
@@ -438,6 +455,7 @@ app.post('/api/users/successBuy', auth, (req,res)=>{
                     )
                 },(err)=>{
                     if(err) return res.json({success:false,err});
+                    sendEmail(user.email,user.name,null,"purchase",transactionData);
                     res.status(200).json({
                         success: true,
                         cart: user.cart,

@@ -2,8 +2,12 @@ const express = require('express');// server
 const bodyParser = require('body-parser'); // brings json from actual request --check packe if installed
 const cookieParser = require('cookie-parser'); // for cookies
 const formidable = require('express-formidable');// handles file request
+const multer = require('multer');
 const cloudinary = require('cloudinary');
 const SHA1 = require('crypto-js/sha1');
+const fs = require('fs');
+const path = require('path');
+
 
 const app = express();
 const mongoose = require('mongoose');
@@ -24,6 +28,25 @@ cloudinary.config({
     api_key: process.env.CLOUD_API_KEY,
     api_secret: process.env.CLOUD_API_SECRET
 })
+
+// STORAGE MULTER CONFIG
+let storage = multer.diskStorage({
+    destination:(req,file,cb)=>{
+        cb(null,'uploads/')
+    },
+    filename:(req,file,cb)=>{
+        cb(null,`${Date.now()}_${file.originalname}`)
+    },
+    // fileFilter:(req,file,cb)=>{
+
+    //     const ext = path.extname(file.originalname)
+    //     if(ext !== '.jpg' && ext !== '.png'){
+    //         return cb(res.status(400).end('only jpg, png is allowed'),false);
+    //     }
+
+    //     cb(null,true)
+    // }
+});
 
 //=================================
 //           MODELS
@@ -78,6 +101,35 @@ const { sendEmail } = require('./utils/mail/index');
 //     }
 //     smtpTransport.close();
 // })
+
+//=================================
+//             ADMIN UPLOADS
+//=================================
+
+const upload = multer({storage:storage }).single('file')
+
+app.post('/api/users/uploadfile',auth,admin,(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            return res.json({success:false,err})
+        }
+        return res.json({success:true})
+    })
+})
+
+app.get('/api/users/admin_files',auth,admin,(req,res)=>{
+    const dir = path.resolve(".")+'/uploads/';
+    fs.readdir(dir,(err,items)=>{
+        return res.status(200).send(items);
+    })
+})
+
+app.get('/api/users/download/:id',auth,admin,(req,res)=>{
+    console.log(req.params.id)
+    const file = path.resolve(".")+`/uploads/${req.params.id}`;
+    res.download(file);
+})
+
 //=================================
 //           PRODUCTS
 //=================================

@@ -29,7 +29,12 @@ const admin = [
     {
         name: 'Manage Categories',
         linkTo: '/admin/manage_categories'
+    },
+    {
+        name: 'Upload File',
+        linkTo: '/admin/add_file'
     }
+
 ]
 
 const UserLayout = (props) => {

@@ -19,6 +19,7 @@ import ManageSite from './components/User/Admin/manage_site'
 import AddFile from './components/User/Admin/add_file'
 import ResetUser from './components/Reset_user'
 import ResetPass from './components/Reset_user/reset_pass'
+// import TestPage from './components/Test'
 
 import PageNotFound from './components/utils/User/page_not_found'
 const Routes = () => {
@@ -39,6 +40,7 @@ const Routes = () => {
         <Route path="/register" exact component={Auth(Register,false)}/>
         <Route path="/register_login" exact component={Auth(RegisterLogin,false)}/>
         <Route path="/Shop" exact component={Auth(Shop,null)}/>
+        {/* <Route path="/Test" exact component={Auth(TestPage,null)}/> */}
         <Route path="/" exact component={Auth(Home,null)}/>
 
         <Route component={Auth(PageNotFound)}/>

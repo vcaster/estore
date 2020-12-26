@@ -2,9 +2,60 @@ import React, { Component } from 'react';
 import {Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {logoutUser} from '../../../actions/user_actions'
-import { Tab,TabNavigation,Button,Pane,Icon,Heading } from 'evergreen-ui'
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faSearch from '@fortawesome/fontawesome-free-solid/faSearch';
+import {
+    Navbar,
+    NavbarToggler,
+    NavbarBrand,
+    Nav,
+    NavItem,
+    NavLink,
+    Dropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    InputGroup,
+    InputGroupAddon,
+    InputGroupText,
+    FormInput,
+    Collapse
+  } from "shards-react";
+
+
 const store = process.env.REACT_APP_STORE;
 class Header extends Component {
+
+    constructor(props) {
+        super(props);
+    
+        this.toggleDropdown = this.toggleDropdown.bind(this);
+        this.toggleNavbar = this.toggleNavbar.bind(this);
+    
+        this.state = {
+          dropdownOpen: false,
+          collapseOpen: false
+        };
+      }
+    
+      toggleDropdown() {
+        this.setState({
+          ...this.state,
+          ...{
+            dropdownOpen: !this.state.dropdownOpen
+          }
+        });
+      }
+    
+      toggleNavbar() {
+        this.setState({
+          ...this.state,
+          ...{
+            collapseOpen: !this.state.collapseOpen
+          }
+        });
+      }
+      
     state = {
         page: [
             {
@@ -44,6 +95,8 @@ class Header extends Component {
         ]
     }
 
+    
+
     logoutHandler = () =>{
         this.props.dispatch(logoutUser()).then(response =>{
             if(response.payload.success){
@@ -70,12 +123,12 @@ class Header extends Component {
             key={i}
             onClick = {()=> this.logoutHandler()}
             >
-                <Button marginRight={16} appearance="minimal" intent="none" width={5} >{item.name}</Button>
+                {item.name}
             </div>
         :
 
         <Link to={item.linkTo} key={i}>
-            <Button marginRight={16} appearance="minimal" intent="none">{item.name}</Button>
+            {item.name}
         </Link>
 
     )
@@ -112,16 +165,21 @@ class Header extends Component {
     render() {
         return (
 
-            <Pane elevation={1} display="flex" padding={16} background="tint2" borderRadius={3}>
-                <Pane flex={1} alignItems="center" display="flex">
-                    <Heading size={600}><Icon icon="shop" color="success" marginRight={16} />{store}</Heading>
-                </Pane>
-                <Pane>
-                    {this.showLinks(this.state.user)}
-                    {this.showLinks(this.state.page)}
-                </Pane>
-            </Pane>
+            <Navbar type="dark" theme="primary" expand="md">
+        <NavbarBrand href="/">{store}</NavbarBrand>
+        <NavbarToggler onClick={this.toggleNavbar} />
 
+        <Collapse open={this.state.collapseOpen} navbar>
+          <Nav navbar>
+            <NavItem>
+              <NavLink active href="#">
+                Active
+              </NavLink>
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </Navbar>
+            
             // <header className="bck_b_light">
             //     <div className="container">
             //         <div className="left">

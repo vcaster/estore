@@ -55,7 +55,7 @@ const homeSlider = (props) => {
           }
         },
         {
-            breakpoint: 160,
+            breakpoint: 0,
             settings: {
               slidesToShow: 1,
               slidesToScroll: 1

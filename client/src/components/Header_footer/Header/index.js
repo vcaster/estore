@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {logoutUser} from '../../../actions/user_actions'
-const store = process.env.REACT_APP_STORE;
+const store = "E-STORE";
 class Header extends Component {
     state = {
         page: [

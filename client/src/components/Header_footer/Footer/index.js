@@ -5,7 +5,7 @@ import faPhone from '@fortawesome/fontawesome-free-solid/faPhone'
 import faEnvelope from '@fortawesome/fontawesome-free-solid/faEnvelope'
 import faClock from '@fortawesome/fontawesome-free-solid/faClock'
 
-const str = process.env.REACT_APP_STORE;
+const str = "E-STORE";
 const store = str.toLowerCase();
 const Footer = ({data}) => {
     return (

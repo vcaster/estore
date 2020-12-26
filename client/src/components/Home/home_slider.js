@@ -25,43 +25,8 @@ const homeSlider = (props) => {
         dots: false,
         infinite:true,
         speed:500,
-        autoplay:true,
-        slidesToShow: 1,
-      slidesToScroll: 1,
-      initialSlide: 0,
-      responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            infinite: true,
-            dots: false
-          }
-        },
-        {
-          breakpoint: 600,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            initialSlide: 1
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1
-          }
-        },
-        {
-            breakpoint: 160,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1
-            }
-          }
-      ],
+        slidesToShow:1,
+        slidesToScoll:1,
         arrows:false
     }
 

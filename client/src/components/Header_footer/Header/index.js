@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {Link, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {logoutUser} from '../../../actions/user_actions'
-import { Tab,TabNavigation,Button,Pane,Icon,Heading } from 'evergreen-ui'
 const store = process.env.REACT_APP_STORE;
 class Header extends Component {
     state = {
@@ -70,12 +69,12 @@ class Header extends Component {
             key={i}
             onClick = {()=> this.logoutHandler()}
             >
-                <Button marginRight={16} appearance="minimal" intent="none" width={5} >{item.name}</Button>
+                {item.name}
             </div>
         :
 
         <Link to={item.linkTo} key={i}>
-            <Button marginRight={16} appearance="minimal" intent="none">{item.name}</Button>
+            {item.name}
         </Link>
 
     )
@@ -111,35 +110,24 @@ class Header extends Component {
 
     render() {
         return (
-
-            <Pane elevation={1} display="flex" padding={16} background="tint2" borderRadius={3}>
-                <Pane flex={1} alignItems="center" display="flex">
-                    <Heading size={600}><Icon icon="shop" color="success" marginRight={16} />{store}</Heading>
-                </Pane>
-                <Pane>
-                    {this.showLinks(this.state.user)}
-                    {this.showLinks(this.state.page)}
-                </Pane>
-            </Pane>
-
-            // <header className="bck_b_light">
-            //     <div className="container">
-            //         <div className="left">
-            //             <div className="logo">
-            //             {store}
-            //             </div>
-            //         </div>
-            //         <div className="right">
-            //             <div className="top">
-            //                 {this.showLinks(this.state.user)}
-            //             </div>
-            //             <div className="bottom">
-            //                 {this.showLinks(this.state.page)}
-            //             </div>
-            //         </div>
-            //     </div>
+            <header className="bck_b_light">
+                <div className="container">
+                    <div className="left">
+                        <div className="logo">
+                        {store}
+                        </div>
+                    </div>
+                    <div className="right">
+                        <div className="top">
+                            {this.showLinks(this.state.user)}
+                        </div>
+                        <div className="bottom">
+                            {this.showLinks(this.state.page)}
+                        </div>
+                    </div>
+                </div>
                 
-            // </header>
+            </header>
         );
     }
 }

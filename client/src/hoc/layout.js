@@ -5,7 +5,6 @@ import Footer from '../components/Header_footer/Footer'
 
 import { connect } from 'react-redux';
 import {getSiteData} from '../actions/site_actions'
-import { Container } from 'react-bootstrap';
 
 class Layout extends Component {
 

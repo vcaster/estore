@@ -1,7 +1,8 @@
+.env
 /node_modules
 /build
 /client/node_modules
-.env
+
 .DS_Store
 
 npm-debug.log*
